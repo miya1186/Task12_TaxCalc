@@ -23,7 +23,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func calc(_ sender: Any) {
-        UserDefaults.standard.set(taxTextField.text, forKey: taxValue)
+        UserDefaults.standard.set(taxTextField.text, forKey: taxValueKey)
         tax()
     }
     
