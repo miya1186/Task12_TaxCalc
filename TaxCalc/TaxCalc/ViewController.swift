@@ -10,29 +10,29 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    @IBOutlet var textField: UITextField!
-    @IBOutlet var textField2: UITextField!
-    @IBOutlet var result: UILabel!
-    
-    let taxValue = "taxValue"
+    //変数名を読みやすいように変更
+    @IBOutlet var priceTextField: UITextField!
+    @IBOutlet var taxTextField: UITextField!
+    @IBOutlet var resultLabel: UILabel!
+    let taxValueKey = "taxValue"
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if UserDefaults.standard.object(forKey: taxValue) != nil {
-            textField2.text = UserDefaults.standard.object(forKey: taxValue) as? String
-        }
+        
+        taxTextField.text = (UserDefaults.standard.object(forKey: taxValueKey) as? String) ?? ""
     }
     
     @IBAction func calc(_ sender: Any) {
-        UserDefaults.standard.set(textField2.text, forKey: taxValue)
+        UserDefaults.standard.set(taxTextField.text, forKey: taxValue)
         tax()
     }
     
     func tax (){
-        let taxNum = Int(textField.text!)
-        let conTax = Float(1 + Float(textField2.text!)! / 100)
-        let taxCalc = Int(Float(taxNum!) * conTax)
-        result.text = String(taxCalc)
+        //textFieldの中身を空にするとアプリが落ちるので、修正しました
+        let taxNum = Int(priceTextField.text!) ?? 0
+        let consumptionTax =  (Float(taxTextField.text!) ?? 0) / 100
+        let taxCalc = Int(Float(taxNum) * (1 + consumptionTax))
+        resultLabel.text = String(taxCalc)
     }
 }
 
